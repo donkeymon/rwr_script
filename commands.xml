@@ -1,0 +1,3 @@
+<command_aliases>
+    <alias name="start_invasion" command="start_script start_inv.as"/>
+</command_aliases>
