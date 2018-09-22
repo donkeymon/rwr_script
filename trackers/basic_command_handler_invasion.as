@@ -38,22 +38,22 @@ class BasicCommandHandlerInvasion : Tracker {
         int cost = 0;
 
         switch(buyIndex) {
-        	case 1:
+            case 1:
+                if (playerRp >= 150) {
+                    addItemToPlayer(characterId, "vest3", "carry_item", 4, 1);
+                    cost = 150;
+                }
+                break;
+        	case 2:
         		if (playerRp >= 2) {
                     addItemInPlayerBackpack(characterId, "medikit", "weapon", 2);
                     cost = 2;
                 }
                 break;
-            case 2:
+            case 3:
                 if (playerRp >= 10) {
                     addItemInPlayerBackpack(characterId, "wrench", "weapon", 2);
                     cost = 10;
-                }
-                break;
-            case 3:
-                if (playerRp >= 150) {
-                    addItemToPlayer(characterId, "vest3", "carry_item", 4, 1);
-                    cost = 150;
                 }
                 break;
             case 4:
@@ -369,8 +369,11 @@ class BasicCommandHandlerInvasion : Tracker {
                 return;
             }
 
-            if (checkCommand(message, "buy ") && ENABLE_COMMAND_BUY == true) {
-            	// /buy 1
+            if (checkCommand(message, "buy") && ENABLE_COMMAND_BUY == true) {
+            	// /buy 1 or /buy
+                if (command_arr.length() == 1) {
+                    command_arr[1] = 1;
+                }
             	command_buy(parseInt(command_arr[1]), senderPos, characterId, characterInfo);
 			} else if (checkCommand(message, "ljt ") && ENABLE_COMMAND_LJT == true) {
 				// /ljt
@@ -387,8 +390,11 @@ class BasicCommandHandlerInvasion : Tracker {
 		}
 
         // 管理员命令
-        if (checkCommand(message, "buy ")) {
-            // /buy 1
+        if (checkCommand(message, "buy")) {
+            // /buy 1 or /buy
+            if (command_arr.length() == 1) {
+                command_arr.insertLast(1)
+            }
             command_buy(parseInt(command_arr[1]), senderPos, characterId, characterInfo);
         } else if (checkCommand(message, "wudi ")) {
             // /wudi 10
