@@ -373,6 +373,8 @@ class BasicCommandHandlerInvasion : Tracker {
             	// /buy 1 or /buy
                 if (command_arr.length() == 1) {
                     command_arr.insertLast("1");
+                } else if (command_arr[1] == "") {
+                    command_arr[1] = "1"
                 }
             	command_buy(parseInt(command_arr[1]), senderPos, characterId, characterInfo);
 			} else if (checkCommand(message, "ljt ") && ENABLE_COMMAND_LJT == true) {
@@ -394,6 +396,8 @@ class BasicCommandHandlerInvasion : Tracker {
             // /buy 1 or /buy
             if (command_arr.length() == 1) {
                 command_arr.insertLast("1");
+            } else if (command_arr[1] == "") {
+                command_arr[1] = "1"
             }
             command_buy(parseInt(command_arr[1]), senderPos, characterId, characterInfo);
         } else if (checkCommand(message, "ljt")) {
