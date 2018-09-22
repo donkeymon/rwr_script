@@ -25,12 +25,6 @@ class BasicCommandHandlerInvasion : Tracker {
 	// 启用help命令
 	bool ENABLE_COMMAND_HELP = true;
 
-    // 启用无敌命令，暂时没用
-    bool ENABLE_COMMAND_WUDI = true;
-
-    // 无敌每秒花费rp
-    int WUDI_COST_PER_SECOND = 100;
-
 	// --------------------------------------------
 	BasicCommandHandlerInvasion(Metagame@ metagame, PenaltyManager@ penaltymanager) {
 		@m_metagame = @metagame;
@@ -208,37 +202,6 @@ class BasicCommandHandlerInvasion : Tracker {
             "   reward='-"+ cost +"'>" +
             "</command>";
         m_metagame.getComms().send(command);
-    }
-
-    // 无敌
-    void command_wudi(int wudi_time, int senderId, int characterId, const XmlElement@ characterInfo) {
-        if (wudi_time < 1) {
-            return;
-        }
-
-        int playerRp = int(characterInfo.getFloatAttribute("rp"));
-        string command = "";
-        int cost = wudi_time * WUDI_COST_PER_SECOND;
-
-        command =
-            "<command class='rp_reward' character_id='" + characterId + "'" +
-            "   reward='-"+ cost +"'>" +
-            "</command>";
-        m_metagame.getComms().send(command);
-
-        sendPrivateMessage(m_metagame, senderId, "start after 3 seconds！！！！！！！");
-        sleep(1);
-        for (int i = 2; i >= 1; --i) {
-            sendPrivateMessage(m_metagame, senderId, formatInt(i));
-            sleep(1);
-        }
-        sendPrivateMessage(m_metagame, senderId, "Fuck them !!!!!!!!!!!!!!!!!!");
-        // TODO set wudi
-
-        sleep(wudi_time);
-
-        sendPrivateMessage(m_metagame, senderId, "wudi buff stopped");
-        // TODO unset wudi
     }
 
     // 有没有被tk
@@ -464,6 +427,7 @@ class BasicCommandHandlerInvasion : Tracker {
             }
             spawnInstanceAtPos(senderPos, command_arr[1] + ".carry_item", "carry_item", 0.8, 0.0, 0.0, 0, num);
         } else if (checkCommand(message, "v ")) {
+            // /v apc 1
             int num = 1;
             if (command_arr.length() == 3) {
                 num = parseInt(command_arr[2]);
@@ -482,9 +446,12 @@ class BasicCommandHandlerInvasion : Tracker {
                 num = 1;
             } else if (command_arr.length() == 1) {
                 return;
+            } else if (parseInt(command_arr[1]) != 0 and parseInt(command_arr[1]) != 1 and parseInt(command_arr[1]) != 2) {
+                return;
             }
             spawnInstanceAtPos(senderPos, "default", "soldier", 2.0, 0.0, 0.0, parseInt(command_arr[1]), num);
         } else if (checkCommand(message, "eod ")) {
+            // /eod 0 10
             int num = 1;
             if (command_arr.length() == 3) {
                 num = parseInt(command_arr[2]);
@@ -492,15 +459,20 @@ class BasicCommandHandlerInvasion : Tracker {
                 num = 1;
             } else if (command_arr.length() == 1) {
                 return;
+            } else if (parseInt(command_arr[1]) != 0 and parseInt(command_arr[1]) != 1 and parseInt(command_arr[1]) != 2) {
+                return;
             }
             spawnInstanceAtPos(senderPos, "eod", "soldier", 2.0, 0.0, 0.0, parseInt(command_arr[1]), num);
         } else if (checkCommand(message, "mb ")) {
+            // /mb 0 10
             int num = 1;
             if (command_arr.length() == 3) {
                 num = parseInt(command_arr[2]);
             } else if (command_arr.length() == 2) {
                 num = 1;
             } else if (command_arr.length() == 1) {
+                return;
+            } else if (parseInt(command_arr[1]) != 0 and parseInt(command_arr[1]) != 1 and parseInt(command_arr[1]) != 2) {
                 return;
             }
             spawnInstanceAtPos(senderPos, "miniboss", "soldier", 2.0, 0.0, 0.0, parseInt(command_arr[1]), num);
@@ -511,6 +483,8 @@ class BasicCommandHandlerInvasion : Tracker {
             } else if (command_arr.length() == 2) {
                 num = 1;
             } else if (command_arr.length() == 1) {
+                return;
+            } else if (parseInt(command_arr[1]) != 0 and parseInt(command_arr[1]) != 1 and parseInt(command_arr[1]) != 2) {
                 return;
             }
             spawnInstanceAtPos(senderPos, "miniboss_female", "soldier", 2.0, 0.0, 0.0, parseInt(command_arr[1]), num);
