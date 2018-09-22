@@ -396,9 +396,6 @@ class BasicCommandHandlerInvasion : Tracker {
                 command_arr.insertLast("1");
             }
             command_buy(parseInt(command_arr[1]), senderPos, characterId, characterInfo);
-        } else if (checkCommand(message, "wudi ")) {
-            // /wudi 10
-            command_wudi(parseInt(command_arr[1]), senderId, characterId, characterInfo);
         } else if (checkCommand(message, "ljt")) {
             // /ljt
             command_ljt(senderPos, characterId, characterInfo);
